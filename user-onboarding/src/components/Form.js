@@ -51,6 +51,23 @@ const UserForm = ({ values, touched, errors, status }) => {
           )}
         </label>
 
+        <label htmlFor="Role">
+                Role
+            <Field
+                component="select"
+                className="role-select"
+                id="Role"
+                type="dropdown"
+                name="Role"
+                placeholder="Role"
+                >
+                <option>Choose an option </option>
+                <option value="frontend">Front End Developer</option>
+                <option value="backend">Back End Developer</option>
+                <option value="engineer">Engineer</option>
+            </Field>
+            </label>
+
         <label htmlFor="terms" className="checkbox-container">
           Terms of Service
           <Field
@@ -64,6 +81,8 @@ const UserForm = ({ values, touched, errors, status }) => {
             )}
           <span className="checkmark" />
         </label>
+
+       
        
         <button type="submit">Submit!</button>
       </Form>
@@ -73,7 +92,7 @@ const UserForm = ({ values, touched, errors, status }) => {
           <li>Name: {user.name}</li>
           <li>Email: {user.email}</li>
           <li>Password: {user.password}</li>
-          
+          <li>Role: {user.role}</li>
         </ul>
       ))}
     </div>
@@ -82,11 +101,12 @@ const UserForm = ({ values, touched, errors, status }) => {
 
 
 const FormikForm = withFormik({
-  mapPropsToValues({ name, email, password, terms }) {
+  mapPropsToValues({ name, email, password, role, terms }) {
     return {
       name: name || "",
       email: email || "",
       password: password || "",
+      role: role || "",
       terms: terms || false,
       
     };
@@ -95,7 +115,8 @@ const FormikForm = withFormik({
     name: Yup.string().required(),
     email: Yup.string().required(),
     password: Yup.string().required(),
-    terms: Yup.string().required()
+    terms: Yup.string().required(),
+    role: Yup.string().required(),
   }),
   handleSubmit(values, { setStatus, resetForm }) {
     console.log("submitting", values);
